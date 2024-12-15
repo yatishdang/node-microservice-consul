@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  consul:
+    image: hashicorp/consul:1.16.0
+    ports:
+      - "8500:8500"  # Consul UI
+      - "8600:8600/udp"  # DNS
+    command: agent -server -bootstrap-expect=1 -ui -client=0.0.0.0
+    networks:
+      - microservices-network
+
+  auth-service:
+    build:
+      context: ./  # Set the build context to the root of the microservices directory
+      dockerfile: ./auth-service/Dockerfile  # Specify the Dockerfile location
+    environment:
+      - SERVICE_NAME=auth-service
+      - SERVICE_ID=auth-service
+      - HOST_ADDRESS=auth-service
+      - PORT=3000
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+    volumes:
+      - ./shared/consul-helper:/usr/src/app/node_modules/consul-helper  # Share consul-helper directory
+    networks:
+      - microservices-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - consul
+  user-service:
+    build:
+      context: ./ #set the build context to root of microservice directory
+      dockerfile: ./user-service/Dockerfile
+    environment:
+      - SERVICE_NAME=user-service
+      - SERVICE_ID=user-service
+      - HOST_ADDRESS=user-service #Same as service name in docker compose
+      - PORT=3001
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+    volumes:
+      - ./shared/consul-helper:/usr/src/app/node_modules/consul-helper  # Share consul-helper directory
+    depends_on:
+      - consul  #Name of service in docker compose file
+    networks:
+      - microservices-network
+
+#  user-service:
+#    build:
+#      context: ./user-service
+#    environment:
+#      - SERVICE_NAME=user-service
+#      - PORT=3001
+#    ports:
+#      - "3001:3001"
+#    depends_on:
+#      - consul
+#
+
+networks:
+  microservices-network:
