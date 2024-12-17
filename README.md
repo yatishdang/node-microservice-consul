@@ -51,8 +51,8 @@ Here are some useful **docker-compose** commands:
   ```
   docker-compose up --build --remove-orphans <service-name>
   ```
-
-- **Stop and Remove Containers with Volumes:
+  
+- **Stop and Remove Containers with Volumes:**
   ```
   docker-compose down --volumes
   ```
@@ -60,14 +60,20 @@ Here are some useful **docker-compose** commands:
 ## **Project Structure**
 
 ```
-root/
-├── docker-compose.yml         # Docker Compose configuration
-├── shared/
-│   └── consul-helper/         # Shared Consul integration module
-│       └── package.json
-└── microservices/
-├── auth-service/          # Authentication microservice
-└── user-service/          # User management microservice
+├── docker-compose.yaml
+├── README.md
+├── shared
+│        └── consul-helper
+│           ├── index.js
+│           └── package.json
+├── auth-service
+│   ├── Dockerfile
+│   ├── index.js
+│   └── package.json
+└── user-service
+    ├── Dockerfile
+    ├── index.js
+    └── package.json
 ```
 
 ## **Contributing**
