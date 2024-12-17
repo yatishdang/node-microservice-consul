@@ -6,8 +6,8 @@ const app = express();
 app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3001;
-const SERVICE_NAME = process.env.SERVICE_NAME || 'user-service';
-const SERVICE_ID = process.env.SERVICE_ID || 'user-service';
+const SERVICE_NAME = process.env.SERVICE_NAME || 'user-service1';
+const SERVICE_ID = process.env.SERVICE_ID || 'user-service1';
 const HOST_ADDRESS = process.env.HOST_ADDRESS || '192.168.1.36';
 
 // Health Check Endpoint
@@ -18,6 +18,9 @@ app.get(`/${SERVICE_NAME}`, (req, res) => {
   res.send({ service: SERVICE_NAME, message: `Welcome to the ${SERVICE_NAME}` });
 });
 
+console.log(`USER SERVICE | ${SERVICE_NAME}, ${SERVICE_ID}, ${PORT}, ${HOST_ADDRESS}`)
+console.log(`HOSTNAME  | ${process.env.HOSTNAME}`)
+console.log(process.env);
 // Register the service with Consul
 ConsulHelper.registerService( SERVICE_NAME, SERVICE_ID, PORT, HOST_ADDRESS )
   .then(() => console.log(`${SERVICE_NAME} registered successfully.`))

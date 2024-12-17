@@ -3,6 +3,7 @@ FROM node:18 as consul-helper
 
 WORKDIR /consul-helper
 COPY ./shared/consul-helper /consul-helper
+RUN npm install
 
 # Stage 2: Build the auth-service
 FROM node:18
