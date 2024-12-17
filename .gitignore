@@ -6,6 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+/reference/
+reference/
+reference/*
 # Node build artifacts and directories
 node_modules/
 *.tsbuildinfo
