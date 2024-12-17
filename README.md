@@ -1,24 +1,77 @@
-# Pre-requisite
-    # docker
-    # npm
+# Node.js Microservices with Consul Integration
+This project demonstrates how to integrate **Consul** for service discovery in a **Node.js microservices architecture**. **Docker** and **Docker Compose** are used to containerize and orchestrate the services.
 
-# Install consul dependency in shared folder, otherwise we have to copy same module in all microservice
-    cd shared/consul-helper
-    npm install 
+---
 
-Start docker container using docker-compose - run command from root directory of project
-    
-    cd ../../
-    docker-compose up --build
+## **Pre-requisites**
+Ensure the following are installed on your machine:
 
-Access consul at
-    
-    http://localhost:8500/
-    
-Discover User service from auth service
-    
-    http://localhost:3000/discover
+- **Docker** (for containerization)
+- **npm** (Node.js package manager)
 
-# Other command
-## docker-compose up --build --remove-orphans <optional: service-name>
-## docker-compose down --volumes
+---
+
+## **Setup Instructions**
+
+### 1. Install Consul Dependency
+
+To avoid duplicating dependencies across microservices, install the **Consul helper** in the shared folder.
+
+Run the following commands:
+
+```
+cd shared/consul-helper
+npm install
+```
+
+### 2. Start Docker Containers
+
+Use **docker-compose** to build and run all the services. From the root directory of the project, execute:
+
+```
+docker-compose up --build
+```
+
+### 3. Access Consul and Services
+
+- **Consul UI:**  
+  Access the Consul dashboard at:  
+  [http://localhost:8500/](http://localhost:8500/)
+
+- **Service Discovery:**  
+  Discover the **User service** from the **Auth service** at:  
+  [http://localhost:3000/discover](http://localhost:3000/discover)
+
+## **Additional Commands**
+
+Here are some useful **docker-compose** commands:
+
+- **Build and Start Containers (optionally for a specific service):**
+
+  ```
+  docker-compose up --build --remove-orphans <service-name>
+  ```
+
+- **Stop and Remove Containers with Volumes:
+  ```
+  docker-compose down --volumes
+  ```
+
+## **Project Structure**
+
+```
+root/
+├── docker-compose.yml         # Docker Compose configuration
+├── shared/
+│   └── consul-helper/         # Shared Consul integration module
+│       └── package.json
+└── microservices/
+├── auth-service/          # Authentication microservice
+└── user-service/          # User management microservice
+```
+
+## **Contributing**
+Contributions are welcome! Feel free to fork this repository, raise issues, or submit a pull request.
+
+## **License**
+This project is licensed under the MIT License.
